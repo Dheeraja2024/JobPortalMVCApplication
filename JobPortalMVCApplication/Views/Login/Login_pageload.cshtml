@@ -1,0 +1,25 @@
+﻿@model JobPortalMVCApplication.Models.LoginCls
+@{
+    ViewBag.Title = "Login_pageload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>USER LOGIN FORM</h2>
+<div>
+    @using(Html.BeginForm("login_click", "Login", FormMethod.Get))
+    {
+        <div><label>USERNAME :</label></div>
+        <div>
+            @Html.TextBoxFor(m => m.username)
+            @Html.ValidationMessageFor(m => m.username)
+        </div>
+        <div><label>PASSWORD :</label></div>
+        <div>
+            @Html.TextBoxFor(m => m.password)
+            @Html.ValidationMessageFor(m => m.password)
+        </div>
+        <div><input  type="submit" value="Login"/>
+        @Html.DisplayFor(m=>m.msg)</div>
+     }
+</div>
+

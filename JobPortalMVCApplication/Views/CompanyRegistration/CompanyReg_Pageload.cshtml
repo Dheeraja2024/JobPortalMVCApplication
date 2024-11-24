@@ -1,0 +1,64 @@
+﻿@model JobPortalMVCApplication.Models.InsertCompany
+@{
+    ViewBag.Title = "CompanyReg_Pageload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>COMPANY REGISTRATION</h1>
+<div>
+    @using(Html.BeginForm("InsertCompany_Click", "CompanyRegistration", FormMethod.Post))
+    {
+        <div><label>NAME: </label></div>
+        <div>
+            @Html.TextBoxFor(m => m.name)
+            @Html.ValidationMessageFor(m => m.name)
+        </div>
+        <div><label>ADDRESS: </label></div>
+        <div>
+            @Html.TextAreaFor(m => m.address)
+            @Html.ValidationMessageFor(m => m.address)
+        </div>
+        <div><label>PHONE: </label></div>
+        <div>
+            @Html.TextBoxFor(m => m.phone)
+            @Html.ValidationMessageFor(m => m.phone)
+        </div>
+        <div><label>EMAIL: </label></div>
+        <div>
+            @Html.TextBoxFor(m => m.email)
+            @Html.ValidationMessageFor(m => m.email)
+        </div>
+        <div><label>WEBSITE ADDRESS : </label></div>
+        <div>
+            @Html.TextBoxFor(m => m.website)
+            @Html.ValidationMessageFor(m => m.website)
+        </div>
+        <div><label>PHOTO: </label></div>
+        <div>
+            @Html.TextBox("file", " ", new { Type = "file" })
+            @Html.ValidationMessageFor(m => m.photo)
+        </div>
+        <div><label> USERNAME : </label></div>
+        <div>
+            @Html.TextBoxFor(m => m.username)
+            @Html.ValidationMessageFor(m => m.username)
+        </div>
+        <div><label>PASSWORD : </label></div>
+        <div>
+            @Html.PasswordFor(m => m.password)
+            @Html.ValidationMessageFor(m => m.password)
+        </div>
+        <div><label>CONFIRM PASSWORD : </label></div>
+        <div>
+            @Html.PasswordFor(m => m.cpassword)
+            @Html.ValidationMessageFor(m => m.cpassword)
+        </div>
+        <div><input type="submit" value="Insert"/>
+               @Html.DisplayFor(m=>m.msg)
+        </div>
+        
+
+
+    }
+</div>
+
