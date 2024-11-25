@@ -23,18 +23,18 @@ namespace JobPortalMVCApplication.Controllers
         //}
 
 
-        public ActionResult InsertCompany_Click( InsertCompany insertCompany, HttpPostedFileBase file)
+        public ActionResult InsertCompany_Click( InsertCompany insertCompany, HttpPostedFileBase file, FormCollection form)
         {
             if (ModelState.IsValid)
             {
                 if (file.ContentLength>0)
                 {
-                    var fname = Path.GetFileName(file.FileName);
-                    var s=Server.MapPath("~/Company Photos/ ");
+                    string fname = Path.GetFileName(file.FileName);
+                    var s=Server.MapPath("~/Company Photos");
                     string pa = Path.Combine(s, fname);
                     file.SaveAs(pa);
 
-                     var fullpath=Path.Combine("~\\Company Photos\\" + fname);
+                     var fullpath=Path.Combine("~\\Company Photos" , fname);
                     insertCompany.photo = fullpath;
                 }
                 var maxLoginId=dbobj.sp_MaxLoginId().FirstOrDefault();
@@ -51,10 +51,10 @@ namespace JobPortalMVCApplication.Controllers
                 dbobj.sp_RegisterCompany(regId, insertCompany.name, insertCompany.address, insertCompany.email, insertCompany.phone, insertCompany.website, insertCompany.photo);
                 dbobj.sp_InsertLoginCredentials(regId, insertCompany.username, insertCompany.password, "Company");
                 insertCompany.msg = "INSERTED SUCESSFULLY";
-                return RedirectToAction("Login_pageload", "Login");
+                return View("CompanyReg_Pageload", insertCompany);
                 //return View("InsertCompany_Click",insertCompany);
             }
-            return View("Login");
+            return View("CompanyReg_Pageload", insertCompany);
         }
         
     }

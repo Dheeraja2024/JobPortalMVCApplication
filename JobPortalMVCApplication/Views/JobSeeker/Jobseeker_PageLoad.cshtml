@@ -1,0 +1,115 @@
+﻿@model JobPortalMVCApplication.Models.JobseekerRegistration
+@{
+    ViewBag.Title = "Jobseeker_PageLoad";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>JOBSEEKER REGISTRATION</h2>
+<div>
+    @using (Html.BeginForm("register_buttonClick", "JobSeeker", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div><label>NAME :</label></div>
+        <div>
+            @Html.TextBoxFor(m => m.name)
+            @Html.ValidationMessageFor(m => m.name)
+        </div>
+
+        <div><label>AGE : :</label></div>
+        <div>
+            @Html.TextBoxFor(m => m.age)
+            @Html.ValidationMessageFor(m => m.age)
+        </div>
+
+        <div><label>ADDRESS :</label></div>
+        <div>
+            @Html.TextAreaFor(m => m.address)
+            @Html.ValidationMessageFor(m => m.address)
+        </div>
+
+        <div><label>MAIL :</label></div>
+        <div>
+            @Html.TextBoxFor(m => m.email)
+            @Html.ValidationMessageFor(m => m.email)
+        </div>
+
+        <div><label>PHONE :</label></div>
+        <div>
+            @Html.TextBoxFor(m => m.phone)
+            @Html.ValidationMessageFor(m => m.phone)
+        </div>
+
+        <div><label>Qualification :</label></div>
+        <div>
+            @foreach (var item in Model.MyQualification)
+            {
+                <label>
+                    <input type="checkbox" value="@item.Value" checked="@item.IsChecked" name="SelectedQual" id="@item.Value" />@Html.Raw(item.Text)
+                </label>
+            }
+        </div>
+
+        <div><label>GENDER :</label></div>
+        <div>
+            Male @Html.RadioButtonFor(m => m.gender, "Male")
+            Female @Html.RadioButtonFor(m => m.gender, "Female")
+        </div>
+
+        <div><label>STATE :</label></div>
+        <div>
+            @Html.DropDownList("ddlstates", (SelectList)ViewBag.SelectedState, "--SELECT STATE--", new { @class = "form-Control" })
+        </div>
+
+        <div><label>SKILL :</label></div>
+        <div>
+            @Html.TextAreaFor(m => m.skill)
+            @Html.ValidationMessageFor(m => m.skill)
+        </div>
+
+        <div><label>EXPERIENCE :</label></div>
+        <div>
+            @Html.TextBoxFor(m => m.exp)
+            @Html.ValidationMessageFor(m => m.exp)
+        </div>
+
+        <div><label>LOCATION :</label></div>
+        <div>
+            @Html.TextBoxFor(m => m.location)
+            @Html.ValidationMessageFor(m => m.location)
+        </div>
+
+        <div><label>PHOTO :</label></div>
+        <div>
+            @Html.TextBox("file", "", new { Type = "file" })
+            @Html.ValidationMessageFor(m => m.skill)
+        </div>
+
+        <div><label>USERNAME :</label></div>
+        <div>
+            @Html.TextBoxFor(m => m.username)
+            @Html.ValidationMessageFor(m => m.username)
+        </div>
+
+        <div><label>PASSWORD :</label></div>
+        <div>
+            @Html.PasswordFor(m => m.password)
+            @Html.ValidationMessageFor(m => m.password)
+        </div>
+        <div><label>CONFIRM PASSWORD :</label></div>
+        <div>
+            @Html.PasswordFor(m => m.cpassword)
+            @Html.ValidationMessageFor(m => m.cpassword)
+        </div>
+
+        <div>
+            <input type="submit" value="Insert" />
+            @Html.DisplayFor(m => m.msg)
+        </div>
+        <div>
+            @Html.ActionLink("Go to Login", "Login_pageload", "Login")
+        </div>
+
+
+
+    }
+</div>
+

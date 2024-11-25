@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using JobPortalMVCApplication.Models;
 
+
 namespace JobPortalMVCApplication.Controllers
 {
     public class LoginController : Controller
@@ -15,21 +16,21 @@ namespace JobPortalMVCApplication.Controllers
         {
             return View();
         }
-        public ActionResult login_click(LoginCls loginCls )
+        public ActionResult login_click(LoginCls loginCls)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-               var getId=  dbobj.sp_CountLoginId(loginCls.username, loginCls.password).FirstOrDefault();
-                if(Convert.ToInt32(getId)==1)
+                var getId = dbobj.sp_CountLoginId(loginCls.username, loginCls.password).FirstOrDefault();
+                if (Convert.ToInt32(getId) == 1)
                 {
-                   var getRegId= dbobj.sp_GetLoginId(loginCls.username, loginCls.password).FirstOrDefault();
+                    var getRegId = dbobj.sp_GetLoginId(loginCls.username, loginCls.password).FirstOrDefault();
                     Session["uid"] = getRegId;
-                     string userType=dbobj.sp_LoginType(loginCls.username, loginCls.password).FirstOrDefault();
-                    if(userType== "Company")
+                    string userType = dbobj.sp_LoginType(loginCls.username, loginCls.password).FirstOrDefault();
+                    if (userType == "Company")
                     {
                         return RedirectToAction("AdminHome");
                     }
-                    else if(userType=="User")
+                    else if (userType == "User")
                     {
                         return RedirectToAction("UserHome");
                     }
@@ -41,7 +42,15 @@ namespace JobPortalMVCApplication.Controllers
                     return View("Login_pageload", loginCls);
                 }
             }
-            return View("Login_pageload",loginCls);
+            return View("Login_pageload", loginCls);
+        }
+        public ActionResult AdminHome()
+        {
+            return View();
+        }
+        public ActionResult UserHome()
+        {
+            return View();
         }
     }
 }

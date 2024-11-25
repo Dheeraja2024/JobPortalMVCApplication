@@ -130,6 +130,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CompanyRegistrationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JobController.cs" />
+    <Compile Include="Controllers\JobSeekerController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -150,6 +152,8 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\InsertCompany.cs" />
+    <Compile Include="Models\InsertJobs.cs" />
+    <Compile Include="Models\JobseekerRegistration.cs" />
     <Compile Include="Models\LoginCls.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="tbl_AppliedJob.cs">
@@ -224,10 +228,15 @@
     <Content Include="Views\CompanyRegistration\CompanyReg_Pageload.cshtml" />
     <Content Include="Views\CompanyRegistration\Login.cshtml" />
     <Content Include="Views\Login\Login_pageload.cshtml" />
+    <Content Include="Views\JobSeeker\Jobseeker_PageLoad.cshtml" />
+    <Content Include="Views\Login\AdminHome.cshtml" />
+    <Content Include="Views\Login\UserHome.cshtml" />
+    <Content Include="Views\Job\JobInsert_Pageload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Company Photos\" />
+    <Folder Include="Jobseeker Photos\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
