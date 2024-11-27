@@ -11,23 +11,22 @@ namespace JobPortalMVCApplication.Models
         //applied DataAnnotation validation for properties
         public int id { get; set; }
 
-       // [Required(ErrorMessage ="Enter  Name")]
+        [Required(ErrorMessage ="Enter  Name")]
         public string name { get; set; }
 
 
-       // [Required(ErrorMessage = "Enter  address")]
+        [Required(ErrorMessage = "Enter  address")]
         public string address { get; set; }
 
-       // [RegularExpression(@"^\+?[0-9]{10,15}$", ErrorMessage = "Please enter a valid contact number.")]
-       // [Required(ErrorMessage = "Enter  contact details")]
+        [Required(ErrorMessage = "Enter Phone number")]
+        [RegularExpression(@"^(\d{10})$", ErrorMessage = "Enter valid number")]
         public string phone { get; set; }
 
-       // [EmailAddress(ErrorMessage ="Enter valid email address")]
-       // [Required(ErrorMessage = "Enter  email address")]
+       [EmailAddress(ErrorMessage ="Enter valid email address")]
         public string email { get; set; }
 
-       // [Required(ErrorMessage = "Website URL is required.")]
-       // [RegularExpression(@"^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$", ErrorMessage = "Please enter a valid website URL.")]
+       [Required(ErrorMessage = "Website URL is required.")]
+       [RegularExpression(@"^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$", ErrorMessage = "Please enter a valid website URL.")]
         public string website { get; set; }
 
         //[Required(ErrorMessage = "Upload photo of company or company LOGO")]
@@ -36,13 +35,13 @@ namespace JobPortalMVCApplication.Models
        // [Required(ErrorMessage = "Enter  username")]
         public string username { get; set; }
 
-       // [Required(ErrorMessage = "Enter  password")]
+       [Required(ErrorMessage = "Enter  password")]
         public string password { get; set; }
 
-       // [Compare("password",ErrorMessage ="PASSWORD MISMATCH")]
+      [Compare("password",ErrorMessage ="PASSWORD MISMATCH")]
         public string cpassword { get; set; }
 
-       // [Required(ErrorMessage = "Enter  message")]
+       [Required(ErrorMessage = "Enter  message")]
         public string msg { get; set; }
 
         

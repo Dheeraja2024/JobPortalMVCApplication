@@ -26,14 +26,18 @@ namespace JobPortalMVCApplication.Models
         public string[] SelectedQual { set; get; }
         public int id { get; set; }
 
+
         [Required(ErrorMessage = "Enter name")]
         public string name { get; set; }
+
 
         [Required(ErrorMessage = "Enter address")]
         public string address { get; set; }
 
+
        [Range(18,50,ErrorMessage = "Enter age")]
         public string age { get; set; }
+
 
        [EmailAddress(ErrorMessage = "Enter valid email")]
         public string email { get; set; }
@@ -45,21 +49,20 @@ namespace JobPortalMVCApplication.Models
 
       
         public string qual { get; set; }
-
-      //[Required(ErrorMessage = "Enter gender")]
         public string gender { get; set; }
-
-       //[Required(ErrorMessage = "Enter state")]
        public string state { get; set; }
 
        [Required(ErrorMessage = "Enter skill")]
         public string skill { get; set; }
 
+
        [Required(ErrorMessage = "Enter exp")]
         public string exp { get; set; }
 
+
        [Required(ErrorMessage = "Enter location")]
         public string location { get; set; }
+
 
       //[Required(ErrorMessage = "Upload photo")]
         public string photo { get; set; }

@@ -30,7 +30,7 @@ namespace JobPortalMVCApplication.Controllers
                 if (file.ContentLength>0)
                 {
                     string fname = Path.GetFileName(file.FileName);
-                    var s=Server.MapPath("~/Company Photos");
+                    var s=Server.MapPath("~/Company Photos/");
                     string pa = Path.Combine(s, fname);
                     file.SaveAs(pa);
 
