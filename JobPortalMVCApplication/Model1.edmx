@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="JobSearchMvcModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="JobSearchMvcModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tbl_AppliedJob">
           <Key>
             <PropertyRef Name="JobApplyId" />
@@ -72,10 +72,18 @@
           <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Usertype" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <Function Name="sp_applycv" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="cid" Type="int" Mode="In" />
+          <Parameter Name="jid" Type="int" Mode="In" />
+          <Parameter Name="cv" Type="varchar" Mode="In" />
+          <Parameter Name="applydate" Type="varchar" Mode="In" />
+          <Parameter Name="status" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_CountLoginId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="una" Type="varchar" Mode="In" />
           <Parameter Name="pass" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="sp_fetchAllJobDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_GetLoginId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="una" Type="varchar" Mode="In" />
           <Parameter Name="pass" Type="varchar" Mode="In" />
@@ -104,6 +112,9 @@
           <Parameter Name="una" Type="varchar" Mode="In" />
           <Parameter Name="pwd" Type="varchar" Mode="In" />
           <Parameter Name="utype" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_Jobsearches" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="qry" Type="nvarchar(max)" Mode="In" />
         </Function>
         <Function Name="sp_LoginType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="una" Type="varchar" Mode="In" />
@@ -141,8 +152,7 @@
           <EntitySet Name="tbl_JobSeeker" EntityType="Self.tbl_JobSeeker" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Login" EntityType="Self.tbl_Login" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="JobSearchMvcModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -281,7 +291,25 @@
             <Parameter Name="location" Mode="In" Type="String" />
             <Parameter Name="photo" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_applycv">
+            <Parameter Name="cid" Mode="In" Type="Int32" />
+            <Parameter Name="jid" Mode="In" Type="Int32" />
+            <Parameter Name="cv" Mode="In" Type="String" />
+            <Parameter Name="applydate" Mode="In" Type="String" />
+            <Parameter Name="status" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_fetchAllJobDetails" ReturnType="Collection(JobSearchMvcModel.sp_fetchAllJobDetails_Result)" />
+          <FunctionImport Name="sp_Jobsearches">
+            <Parameter Name="qry" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="sp_fetchAllJobDetails_Result">
+          <Property Type="String" Name="C_Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Skills" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Experience" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Loction" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="JobStatus" Nullable="false" MaxLength="50" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -369,6 +397,19 @@
           <FunctionImportMapping FunctionImportName="sp_MaxLoginId" FunctionName="JobSearchMvcModel.Store.sp_MaxLoginId" />
           <FunctionImportMapping FunctionImportName="sp_RegisterCompany" FunctionName="JobSearchMvcModel.Store.sp_RegisterCompany" />
           <FunctionImportMapping FunctionImportName="sp_RegisterJobSeeker" FunctionName="JobSearchMvcModel.Store.sp_RegisterJobSeeker" />
+          <FunctionImportMapping FunctionImportName="sp_applycv" FunctionName="JobSearchMvcModel.Store.sp_applycv" />
+          <FunctionImportMapping FunctionImportName="sp_fetchAllJobDetails" FunctionName="JobSearchMvcModel.Store.sp_fetchAllJobDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="JobSearchMvcModel.sp_fetchAllJobDetails_Result">
+                <ScalarProperty Name="C_Name" ColumnName="C_Name" />
+                <ScalarProperty Name="Skills" ColumnName="Skills" />
+                <ScalarProperty Name="Experience" ColumnName="Experience" />
+                <ScalarProperty Name="Loction" ColumnName="Loction" />
+                <ScalarProperty Name="JobStatus" ColumnName="JobStatus" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Jobsearches" FunctionName="JobSearchMvcModel.Store.sp_Jobsearches" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -257,5 +257,44 @@ namespace JobPortalMVCApplication
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_RegisterJobSeeker", idParameter, naParameter, ageParameter, addParameter, emailParameter, phoneParameter, qualParameter, genderParameter, stateParameter, skillParameter, expParameter, locationParameter, photoParameter);
         }
+    
+        public virtual int sp_applycv(Nullable<int> cid, Nullable<int> jid, string cv, string applydate, string status)
+        {
+            var cidParameter = cid.HasValue ?
+                new ObjectParameter("cid", cid) :
+                new ObjectParameter("cid", typeof(int));
+    
+            var jidParameter = jid.HasValue ?
+                new ObjectParameter("jid", jid) :
+                new ObjectParameter("jid", typeof(int));
+    
+            var cvParameter = cv != null ?
+                new ObjectParameter("cv", cv) :
+                new ObjectParameter("cv", typeof(string));
+    
+            var applydateParameter = applydate != null ?
+                new ObjectParameter("applydate", applydate) :
+                new ObjectParameter("applydate", typeof(string));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("status", status) :
+                new ObjectParameter("status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_applycv", cidParameter, jidParameter, cvParameter, applydateParameter, statusParameter);
+        }
+    
+        public virtual ObjectResult<sp_fetchAllJobDetails_Result> sp_fetchAllJobDetails()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_fetchAllJobDetails_Result>("sp_fetchAllJobDetails");
+        }
+    
+        public virtual int sp_Jobsearches(string qry)
+        {
+            var qryParameter = qry != null ?
+                new ObjectParameter("qry", qry) :
+                new ObjectParameter("qry", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Jobsearches", qryParameter);
+        }
     }
 }

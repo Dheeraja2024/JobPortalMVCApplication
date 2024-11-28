@@ -89,7 +89,7 @@ namespace JobPortalMVCApplication.Controllers
                 dbobj.sp_InsertLoginCredentials(regid, clsobj.username, clsobj.password, "User");
                 clsobj.msg = "Successfully Inserted";
                  return View("Jobseeker_PageLoad", clsobj);
-               // return RedirectToAction("Login_pageload", "Login");
+             // return RedirectToAction("Login_pageload", "Login");
 
             }
             else
