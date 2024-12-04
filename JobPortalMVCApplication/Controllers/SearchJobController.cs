@@ -16,8 +16,32 @@ namespace JobPortalMVCApplication.Models
         // GET: SearchJob
         public ActionResult searchjob_pageload()
         {
+            //
+           
+            return View(Getdata());
+        }
+
+        public JobSearch Getdata()
+        {
+            var joblist = new JobSearch();
+
+            List<string> lst = new List<string>();
+
             var job = dbobj.tbl_Job.ToList();
-            return View(job);
+            foreach (var e in job)
+            {
+                var jobcls = new jsearch();
+                jobcls.job_id = e.JobId;
+                jobcls.companyId = e.fk_CompanyId;
+                jobcls.skills = e.Skills;
+                jobcls.experience = e.Experience;
+                jobcls.job_status = e.JobStatus;
+                jobcls.last_Date = e.ApplyLastDate;
+
+                joblist.selectjob.Add(jobcls);
+
+            }
+            return joblist;
         }
 
         public ActionResult searchjob_click(JobSearch clsobj)
@@ -25,19 +49,19 @@ namespace JobPortalMVCApplication.Models
             string qry = "";
             if(!string.IsNullOrWhiteSpace(clsobj.insertse.experience))
             {
-                qry += " and Experience like '%" + clsobj.insertse.experience + "'";
+                qry += " and Experience like '%" + clsobj.insertse.experience + "%'";
             }
             if (!string.IsNullOrWhiteSpace(clsobj.insertse.skills))
             {
-                qry += " and Skills like '%" + clsobj.insertse.skills + "'";
+                qry += " and Skills like '%" + clsobj.insertse.skills + "%'";
             }
             if (!string.IsNullOrWhiteSpace(clsobj.insertse.location))
             {
-                qry += " and Loction like '%" + clsobj.insertse.location + "'";
+                qry += " and Loction like '%" + clsobj.insertse.location + "%'";
             }
             if (!string.IsNullOrWhiteSpace(clsobj.insertse.posted_Date))
             {
-                qry += " and PostedDate like '%" + clsobj.insertse.posted_Date + "'";
+                qry += " and PostedDate like '%" + clsobj.insertse.posted_Date + "%'";
             }
             return View("searchjob_pageload",getdata1(clsobj,qry));
         }
@@ -46,7 +70,7 @@ namespace JobPortalMVCApplication.Models
         {
             using(var con=new SqlConnection(ConfigurationManager.ConnectionStrings["test"].ConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("[sp_Jobsearches]", con);
+                SqlCommand cmd = new SqlCommand("sp_Jobsearches", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@qry", qry);
                 con.Open();

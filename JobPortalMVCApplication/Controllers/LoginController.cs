@@ -50,7 +50,10 @@ namespace JobPortalMVCApplication.Controllers
         }
         public ActionResult UserHome()
         {
-            return View();
+            var job = dbobj.tbl_Job.ToList();
+            return View(job);
+            //  var jobs=dbobj.sp_fetchAllJobDetails();
+           // return View(jobs);
         }
     }
 }

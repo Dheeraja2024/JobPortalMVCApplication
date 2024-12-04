@@ -16,7 +16,7 @@ namespace JobPortalMVCApplication
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "JobSeeker", action = "Jobseeker_PageLoad", id = UrlParameter.Optional }
+                defaults: new { controller = "Login", action = "Login_pageload", id = UrlParameter.Optional }
             );
         }
     }

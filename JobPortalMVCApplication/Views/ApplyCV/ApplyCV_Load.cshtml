@@ -1,0 +1,24 @@
+﻿@model JobPortalMVCApplication.Models.CVInsert
+@{
+    ViewBag.Title = "ApplyCV_Load";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>UPLOAD YOUR RESUME</h2>
+<div>
+
+    @using (Html.BeginForm("Applyclick_Load", "ApplyCV", FormMethod.Post, new { enctype = "miltipart/form-data" }))
+    {
+        <div>
+            @Html.TextBox("file", "", new { Type = "file" })
+            @Html.ValidationMessageFor(m => m.cv)
+        </div>
+        <div>
+            <input type="submit" value="Upload" />
+            @Html.DisplayFor(m => m.appmsg)
+        </div>
+        <div>
+            @Html.ActionLink("Back to Job Search", "UserHome", "Login")
+        </div>
+    }
+</div>

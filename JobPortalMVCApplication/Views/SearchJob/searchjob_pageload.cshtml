@@ -1,0 +1,112 @@
+﻿@model JobPortalMVCApplication.Models.JobSearch
+@{
+    ViewBag.Title = "searchjob_pageload";
+   // Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>JOB SEARCH APPLICATION</h1>
+<div>
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Job Search</h4>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("searchjob_click", "SearchJob", FormMethod.Post))
+                {
+                    {
+                        <div class="row g-3">
+                            <!-- Experience -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.insertse.experience)
+                                    @Html.TextBoxFor(m => m.insertse.experience)
+                                </div>
+                            </div>
+
+                            <!-- Skills -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.insertse.skills)
+                                    @Html.TextBoxFor(m => m.insertse.skills)
+                                </div>
+                            </div>
+
+                            <!-- Location -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.insertse.location)
+                                    @Html.TextBoxFor(m => m.insertse.location)
+                                </div>
+                            </div>
+
+                           
+                            <!-- Search Button -->
+                            <div class="d-flex justify-content-end mt-4">
+                                <button type="submit" class="btn btn-primary">Search Jobs</button>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+<br />
+<br />
+<br />
+
+@using (Html.BeginForm("searchjob_pageload", "SearchJob", FormMethod.Get))
+{
+        <div class="container mt-5">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Job Search Results</h4>
+            </div>
+            <div class="card-body">
+               @if(Model!=null)
+                {
+                    if(Model.selectjob!=null && Model.selectjob.Count != 0)
+                    {
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>@Html.DisplayNameFor(m => m.insertse.companyId)</th>
+                                    <th>@Html.DisplayNameFor(m => m.insertse.skills)</th>
+                                    <th>@Html.DisplayNameFor(m => m.insertse.experience)</th>
+                                    <th>@Html.DisplayNameFor(m => m.insertse.job_status)</th>
+                                    <th>@Html.DisplayNameFor(m => m.insertse.last_Date)</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.selectjob)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem=> item.companyId)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.skills)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.experience)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.job_status)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.last_Date)</td>
+                                        <td>
+                                            @Html.ActionLink("Apply Now", "ApplyCV_Load", "ApplyCV",new { cid = item.companyId, jid = item.job_id },null)
+                                        </td>
+                                    </tr>
+                                 }
+                            </tbody>
+                        </table>
+                     }
+                   else
+                    {
+                    <div class="alert alert-warning text-center" role="alert">
+                        <strong>No jobs found!</strong> Please adjust your search criteria and try again.
+                    </div>
+                    }
+                }
+            </div>
+         </div>
+    </div>
+                }
+
+
